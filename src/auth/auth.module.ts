@@ -1,14 +1,15 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
-import { UserService } from 'src/user/user.service';
 import { UserModule } from 'src/user/user.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from 'src/user/entity/user.entity';
-import { JwtService } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import * as dotenv from 'dotenv';
+import { ConfigModule } from '@nestjs/config';
+dotenv.config();
+console.log(process.env.JWT_SECRET);
 
 @Module({
-  imports: [UserModule],
+  imports: [UserModule, JwtModule, ConfigModule],
   providers: [AuthService, AuthResolver, JwtService],
   exports: [AuthService],
 })

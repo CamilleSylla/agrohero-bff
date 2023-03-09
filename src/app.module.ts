@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user/entity/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -26,6 +27,9 @@ import { AuthModule } from './auth/auth.module';
       include: [UserModule, AuthModule],
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema/schema.gql'),
+    }),
+    ConfigModule.forRoot({
+      envFilePath: '.env',
     }),
     AuthModule,
     UserModule,
